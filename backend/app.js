@@ -55,6 +55,13 @@ require("./config/passport");
 
 app.use(require("./routes"));
 
+// Initialize scheduler for batch operations
+if (isProduction) {
+  const { initScheduler } = require("./config/scheduler");
+  const schedulerEnabled = process.env.ENABLE_SCHEDULER !== "false";
+  initScheduler(schedulerEnabled);
+}
+
 /// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   if (req.url === "/favicon.ico") {

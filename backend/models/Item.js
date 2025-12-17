@@ -13,6 +13,7 @@ var ItemSchema = new mongoose.Schema(
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     tagList: [{ type: String }],
     seller: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    price: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -56,6 +57,7 @@ ItemSchema.methods.toJSONFor = function (user) {
     favorited: user ? user.isFavorite(this._id) : false,
     favoritesCount: this.favoritesCount,
     seller: this.seller.toProfileJSONFor(user),
+    price: this.price,
   };
 };
 
